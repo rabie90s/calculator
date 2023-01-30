@@ -54,6 +54,45 @@ class _CalculatorState extends State<Calculator> {
     '='
   ];
 
+  String result = '';
+  double operand1 = 0.0;
+  double operand2 = 0.0;
+  double res = 0.0;
+
+  buttonPressed(String buttonTxt) {
+    switch (buttonTxt) {
+      case 'C':
+        // Clear all vars
+        result = '';
+        break;
+      case '%':
+        //
+        break;
+      case '/':
+        //
+        break;
+      case '*':
+        //
+        break;
+      case '-':
+        //
+        break;
+      case '+':
+        //
+
+        break;
+      case '=':
+        //
+        break;
+
+      default:
+        result = result + buttonTxt; // It is a number
+    }
+    setState(() {
+      result;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +132,7 @@ class _CalculatorState extends State<Calculator> {
                   ),
                   // Second Row of the result box contains the result and las pressed number
                   Text(
-                    '8',
+                    result,
                     style: TextStyle(
                       color: mediumFontColor,
                       fontSize: 60,
@@ -102,15 +141,34 @@ class _CalculatorState extends State<Calculator> {
                 ],
               ),
             ),
-
             // Buttons Pad:
-            GridView.builder(
-                itemCount: buttonsPad.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 16),
-                itemBuilder: (context, index) {
-                  return new Text('OK');
-                }),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.7,
+              width: double.infinity,
+              padding: const EdgeInsets.all(8),
+              child: GridView.builder(
+                  shrinkWrap: false,
+                  itemCount: buttonsPad.length,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(30))),
+                      child: OutlinedButton(
+                        onPressed: () {
+                          buttonPressed(buttonsPad[index]);
+                        },
+                        child: Text(
+                          buttonsPad[index],
+                          style: const TextStyle(
+                              color: Colors.white30, fontSize: 50),
+                        ),
+                      ),
+                    );
+                  }),
+            ),
           ],
         ),
       ),
